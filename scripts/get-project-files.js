@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-async function getData() {
+async function getFiles() {
   try {
     const response = await fetch(
       `https://api.figma.com/v1/projects/${process.env.PROJECT_ID}/files`,
@@ -22,8 +22,8 @@ async function getData() {
   }
 }
 
-getData().then((data) => {
-  console.log(data);
+getFiles().then((files) => {
+  console.log(files);
 
-  fs.writeFileSync(__dirname + "/../files.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/../files.json", JSON.stringify([files]));
 });
