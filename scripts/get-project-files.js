@@ -25,5 +25,5 @@ async function getData() {
 getData().then((data) => {
   console.log(data);
 
-  fs.writeFileSync("../files.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/../files.json", JSON.stringify(data));
 });
