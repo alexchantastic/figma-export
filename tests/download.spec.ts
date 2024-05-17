@@ -11,7 +11,7 @@ const projects = JSON.parse(
 for (const project of projects) {
   test.describe(`project: ${project.name}`, () => {
     for (const file of project.files) {
-      test(`download file: ${file.name}`, async ({ page }) => {
+      test(`file: ${file.name}`, async ({ page }) => {
         await page.goto(`https://www.figma.com/design/${file.key}/`);
 
         await page
@@ -31,6 +31,8 @@ for (const project of projects) {
             "/" +
             download.suggestedFilename(),
         );
+
+        await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 0);
       });
     }
   });
