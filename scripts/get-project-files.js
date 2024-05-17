@@ -6,7 +6,7 @@ dotenv.config();
 async function getFiles() {
   try {
     const response = await fetch(
-      `https://api.figma.com/v1/projects/${process.env.PROJECT_ID}/files`,
+      `https://api.figma.com/v1/projects/${process.argv[2]}/files`,
       {
         method: "GET",
         headers: {
