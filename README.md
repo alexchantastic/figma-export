@@ -2,6 +2,15 @@
 
 figma-export is a CLI tool for bulk exporting Figma files to your local desktop in Figma's proprietary `.fig` format.
 
+This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and [Playwright](https://playwright.dev/) to automate discovering Figma files and downloading them.
+
+## Table of contents
+
+- [Requirements](#requirements)
+- [Installation](#Installation)
+- [Usage](#usage)
+- [Caveats](#caveats)
+
 ## Requirements
 
 - node (v18.17.x)
@@ -25,7 +34,7 @@ To find your Figma team ID, navigate to your [Figma home](https://www.figma.com/
 
 Create a `.env` file at the root of the repository:
 
-```
+```sh
 FIGMA_EMAIL=email@example.com
 FIGMA_PASSWORD=hunter2
 FIGMA_TEAM_ID=1234567890
@@ -67,7 +76,7 @@ This is a modified structure from the return value of [Figma's GET project files
 
 ### Starting the downloads
 
-Once you have generated `files.json` you can then run `npm run start` to start the downloads. The status of each download will be shown in the console.
+Once you have generated `files.json`, you can then run `npm run start` to start the downloads. The status of each download will be shown in the console.
 
 Each file will be downloaded to your specified `DOWNLOAD_PATH` in a folder with the project's name.
 
