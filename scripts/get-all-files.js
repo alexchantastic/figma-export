@@ -6,7 +6,7 @@ dotenv.config();
 const params = {
   method: "GET",
   headers: {
-    "X-FIGMA-TOKEN": process.env.FIGMA_API_KEY,
+    "X-FIGMA-TOKEN": process.env.FIGMA_ACCESS_TOKEN,
   },
 };
 

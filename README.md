@@ -18,7 +18,7 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 
 Other versions may work, but have not been officially tested.
 
-You will also need a [Figma API key](https://www.figma.com/developers/api#authentication) (personal access token) that you can generate through your Figma user profile settings.
+You will also need a [Figma access token](https://www.figma.com/developers/api#authentication) that you can generate through your Figma user profile settings.
 
 ## Installation
 
@@ -36,7 +36,7 @@ Create a `.env` file at the root of the repository:
 FIGMA_EMAIL=email@example.com
 FIGMA_PASSWORD=hunter2
 FIGMA_TEAM_ID=1234567890
-FIGMA_API_KEY=figd_abcdefghijklmnopqrstuvwxyz
+FIGMA_ACCESS_TOKEN=figd_abcdefghijklmnopqrstuvwxyz
 DOWNLOAD_PATH="/Users/anonymous/Downloads/" # Absolute path where files will be downloaded to
 WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 ```

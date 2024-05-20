@@ -10,7 +10,7 @@ async function getFiles() {
       {
         method: "GET",
         headers: {
-          "X-FIGMA-TOKEN": process.env.FIGMA_API_KEY,
+          "X-FIGMA-TOKEN": process.env.FIGMA_ACCESS_TOKEN,
         },
       },
     );
