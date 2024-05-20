@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "playwright install chromium",
-    "get-all-files": "node ./scripts/get-all-files.js",
+    "get-team-files": "node ./scripts/get-team-files.js",
     "get-project-files": "node ./scripts/get-project-files.js",
     "start": "playwright test"
   },

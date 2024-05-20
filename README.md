@@ -47,7 +47,7 @@ WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 
 It is recommended that you use one of the built-in commands to generate `files.json`:
 
-- `npm run get-all-files {team_id}` - Gets all files within a team
+- `npm run get-team-files {team_id}` - Gets all files for all projects within a given team ID
 - `npm run get-project-files {project_id}` - Gets all files for a given project ID
 
 To find your Figma team ID, navigate to your [Figma home](https://www.figma.com/files/), right click your team in the left sidebar, and then click **Copy link**. The last segment of the URL that you copied will contain your team ID: `https://www.figma.com/files/team/1234567890`.
@@ -98,4 +98,5 @@ export default defineConfig({
 - SSO authentication is not supported
 - Two-factor authentication is not supported
 - Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
+- Projects with the same name in the same team are not supported
 - Files with the same name in the same project are not supported
