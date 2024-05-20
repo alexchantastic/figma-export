@@ -35,7 +35,6 @@ Create a `.env` file at the root of the repository:
 ```sh
 FIGMA_EMAIL=email@example.com
 FIGMA_PASSWORD=hunter2
-FIGMA_TEAM_ID=1234567890
 FIGMA_ACCESS_TOKEN=figd_abcdefghijklmnopqrstuvwxyz
 DOWNLOAD_PATH="/Users/anonymous/Downloads/" # Absolute path where files will be downloaded to
 WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
