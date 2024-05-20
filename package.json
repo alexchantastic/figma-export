@@ -13,10 +13,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.44.0",
     "@types/node": "^20.12.12"
   },
   "dependencies": {
+    "@playwright/test": "^1.44.0",
     "dotenv": "^16.4.5"
   }
 }
