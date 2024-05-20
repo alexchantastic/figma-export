@@ -18,9 +18,7 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 
 Other versions may work, but have not been officially tested.
 
-You will also need a [Figma API key](https://www.figma.com/developers/api#authentication) (personal access token) that you can generate through your Figma user profile settings and your Figma team ID.
-
-To find your Figma team ID, navigate to your [Figma home](https://www.figma.com/files/), right click your team in the left sidebar, and then click **Copy link**. The last segment of the URL that you copied will contain your team ID: `https://www.figma.com/files/team/1234567890`.
+You will also need a [Figma API key](https://www.figma.com/developers/api#authentication) (personal access token) that you can generate through your Figma user profile settings.
 
 ## Installation
 
@@ -49,8 +47,10 @@ WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 
 It is recommended that you use one of the built-in commands to generate `files.json`:
 
-- `npm run get-all-files` - Gets all files within a team
+- `npm run get-all-files {team_id}` - Gets all files within a team
 - `npm run get-project-files {project_id}` - Gets all files for a given project ID
+
+To find your Figma team ID, navigate to your [Figma home](https://www.figma.com/files/), right click your team in the left sidebar, and then click **Copy link**. The last segment of the URL that you copied will contain your team ID: `https://www.figma.com/files/team/1234567890`.
 
 To find a project ID, navigate to your team's home, right click the project, and then click **Copy link**. The last segment of the URL that you copied will contain the project ID: `https://www.figma.com/files/project/1234567890`.
 

@@ -13,7 +13,7 @@ const params = {
 async function getProjects() {
   try {
     const response = await fetch(
-      `https://api.figma.com/v1/teams/${process.env.FIGMA_TEAM_ID}/projects`,
+      `https://api.figma.com/v1/teams/${process.argv[2]}/projects`,
       params,
     );
 
