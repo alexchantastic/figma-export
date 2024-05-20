@@ -18,9 +18,14 @@ async function getProjects() {
     );
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.err || data.message);
+    }
+
     return data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -32,28 +37,36 @@ async function getFiles(projectId) {
     );
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.err || data.message);
+    }
+
     return data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
-getProjects().then((data) => {
-  const { projects } = data;
-  const files = [];
-  const promises = [];
+(async () => {
+  try {
+    const { projects } = await getProjects();
+    const files = [];
+    const promises = [];
 
-  for (const project of projects) {
-    promises.push(
-      getFiles(project.id).then((d) => {
-        console.log(d);
+    for (const project of projects) {
+      const projectFiles = getFiles(project.id);
 
-        files.push(d);
-      }),
-    );
+      promises.push(projectFiles);
+
+      console.log(await projectFiles);
+      files.push(await projectFiles);
+    }
+
+    Promise.all(promises).then(() => {
+      fs.writeFileSync(__dirname + "/../files.json", JSON.stringify(files));
+    });
+  } catch (error) {
+    throw error;
   }
-
-  Promise.all(promises).then(() => {
-    fs.writeFileSync(__dirname + "/../files.json", JSON.stringify(files));
-  });
-});
+})();

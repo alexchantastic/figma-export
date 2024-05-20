@@ -16,14 +16,24 @@ async function getFiles() {
     );
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.err || data.message);
+    }
+
     return data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
-getFiles().then((files) => {
-  console.log(files);
+(async () => {
+  try {
+    const files = await getFiles();
 
-  fs.writeFileSync(__dirname + "/../files.json", JSON.stringify([files]));
-});
+    console.log("files", files);
+    fs.writeFileSync(__dirname + "/../files.json", JSON.stringify([files]));
+  } catch (error) {
+    throw error;
+  }
+})();
