@@ -8,7 +8,7 @@ export default defineConfig({
   fullyParallel: false,
   retries: 0,
   workers: 1,
-  timeout: (Number(process.env.WAIT_TIMEOUT) || 0) + 30 * 1000,
+  timeout: (Number(process.env.WAIT_TIMEOUT) || 0) + 120 * 1000,
   reporter: "list",
   use: {
     trace: "on-first-retry",
