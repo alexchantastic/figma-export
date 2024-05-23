@@ -8,12 +8,18 @@ const { getFiles, getProjects } = require("./lib");
     const promises = [];
 
     for (const project of projects) {
+      const projectId = project.id;
       const projectFiles = getFiles(project.id);
 
       promises.push(projectFiles);
 
-      console.log(await projectFiles);
-      files.push(await projectFiles);
+      const projectFilesData = await projectFiles;
+
+      projectFilesData.id = projectId;
+
+      console.log(projectFilesData);
+
+      files.push(projectFilesData);
     }
 
     Promise.all(promises).then(() => {

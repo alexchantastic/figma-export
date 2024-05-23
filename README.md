@@ -58,7 +58,8 @@ You are free to manually construct this file as long as it follows this structur
 ```json
 [
   {
-    "name": String
+    "name": String,
+    "id": String,
     "files": [
       {
         "key": String,
@@ -77,7 +78,7 @@ This is a modified structure from the return value of [Figma's GET project files
 
 Once you have generated `files.json`, you can then run `npm run start` to start the downloads. The status of each download will be shown in the console.
 
-Each file will be downloaded to your specified `DOWNLOAD_PATH` in a folder with the project's name.
+Each file will be downloaded to your specified `DOWNLOAD_PATH` in a folder named with the project's name and ID. Each file will be saved as the file's name and ID (key).
 
 ### Parallel downloads
 
@@ -97,5 +98,3 @@ export default defineConfig({
 - SSO authentication is not supported
 - Two-factor authentication is not supported
 - Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
-- Projects with the same name in the same team are not supported
-- Files with the same name in the same project are not supported
