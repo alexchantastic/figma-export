@@ -95,6 +95,7 @@ export default defineConfig({
 
 ## Caveats
 
-- SSO authentication is not supported
-- Two-factor authentication is not supported
+- SSO authentication is not supported (suggest using email and password)
+- Two-factor authentication is not supported (suggest temporarily disabling two-factor authentication)
+- Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the timeout in `playwright.config.ts`)
 - Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
