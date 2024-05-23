@@ -14,8 +14,6 @@ for (const project of projects) {
       test(`file: ${file.name} (${file.key})`, async ({ page }) => {
         await page.goto(`https://www.figma.com/design/${file.key}/`);
 
-        await page.locator(".view.gpu-view-content canvas").click();
-
         const downloadPromise = page.waitForEvent("download");
 
         await page.getByRole("button", { name: "Main menu" }).click();
