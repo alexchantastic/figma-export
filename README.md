@@ -93,6 +93,12 @@ export default defineConfig({
 });
 ```
 
+### Retrying failed downloads
+
+If you encounter downloads that fail, you can attempt to re-run _only_ those failed downloads using the `npm run retry` command.
+
+Note that downloads may fail due to any number of reasons, but typically it is due to reaching the Playwright timeout. You can increase this timeout by updating the `timeout` configuration in `playwright.config.ts`.
+
 ## Caveats
 
 - SSO authentication is not supported (suggest using email and password)

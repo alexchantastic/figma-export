@@ -7,7 +7,8 @@
     "postinstall": "playwright install chromium",
     "get-team-files": "node ./scripts/get-team-files.js",
     "get-project-files": "node ./scripts/get-project-files.js",
-    "start": "playwright test"
+    "start": "playwright test",
+    "retry": "playwright test --last-failed"
   },
   "keywords": [],
   "author": "",
