@@ -1,10 +1,14 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default defineConfig({
   testDir: "./automations",
   fullyParallel: false,
   retries: 0,
   workers: 1,
+  timeout: (Number(process.env.WAIT_TIMEOUT) || 0) + 30 * 1000,
   reporter: "list",
   use: {
     trace: "on-first-retry",
