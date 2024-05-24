@@ -1,6 +1,6 @@
 # figma-export
 
-figma-export is a CLI tool for bulk exporting Figma files to your local desktop in Figma's proprietary `.fig` format.
+figma-export is a CLI tool for bulk exporting Figma and FigJam files to your local desktop in Figma's proprietary `.fig`/`.jam` format.
 
 This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and [Playwright](https://playwright.dev/) to automate discovering Figma files and downloading them.
 
@@ -47,7 +47,9 @@ WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 It is recommended that you use one of the built-in commands to generate `files.json`:
 
 - `npm run get-team-files {team_id}` - Gets all files for all projects within a given team ID
+    - Example: `npm run get-team-files 1234567890`
 - `npm run get-project-files {project_ids ...}` - Gets all files for given project IDs (space separated)
+    - Example: `npm run get-project-files 12345 67890`
 
 To find your Figma team ID, navigate to your [Figma home](https://www.figma.com/files/), right click your team in the left sidebar, and then click **Copy link**. The last segment of the URL that you copied will contain your team ID: `https://www.figma.com/files/team/1234567890`.
 
@@ -103,5 +105,5 @@ Note that downloads may fail due to any number of reasons, but typically it is d
 
 - SSO authentication is not supported (suggest using email and password)
 - Two-factor authentication is not supported (suggest temporarily disabling two-factor authentication)
-- Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the timeout in `playwright.config.ts`)
+- Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the `timeout` in `playwright.config.ts`)
 - Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
