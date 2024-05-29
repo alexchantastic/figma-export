@@ -48,9 +48,9 @@ WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 It is recommended that you use one of the built-in commands to generate `files.json`:
 
 - `npm run get-team-files {team_id}` - Gets all files for all projects within a given team ID
-    - Example: `npm run get-team-files 1234567890`
+  - Example: `npm run get-team-files 1234567890`
 - `npm run get-project-files {project_ids ...}` - Gets all files for given project IDs (space separated)
-    - Example: `npm run get-project-files 12345 67890`
+  - Example: `npm run get-project-files 12345 67890`
 
 To find your Figma team ID, navigate to your [Figma home](https://www.figma.com/files/), right click your team in the left sidebar, and then click **Copy link**. The last segment of the URL that you copied will contain your team ID: `https://www.figma.com/files/team/1234567890`.
 
@@ -106,14 +106,14 @@ Note that downloads may fail due to any number of reasons, but typically it is d
 
 The following commands are available via `npm run`:
 
-| Command | Description |
-| === | === |
-| `get-team-files` | Generates `files.json` from a Figma team ID |
+| Command             | Description                                     |
+| ------------------- | ----------------------------------------------- |
+| `get-team-files`    | Generates `files.json` from a Figma team ID     |
 | `get-project-files` | Generates `files.json` from Figma project ID(s) |
-| `start` | Starts downloads |
-| `retry` | Retries failed downloads from last run |
-| `dry-run` | Lists downloads |
-| `report` | Show an HTML report |
+| `start`             | Starts downloads                                |
+| `retry`             | Retries failed downloads from last run          |
+| `dry-run`           | Lists downloads                                 |
+| `report`            | Show an HTML report                             |
 
 ## Known issues
 
