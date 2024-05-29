@@ -9,7 +9,8 @@
     "get-project-files": "node ./scripts/get-project-files.js",
     "start": "playwright test",
     "retry": "playwright test --last-failed",
-    "dry-run": "playwright test --list"
+    "dry-run": "playwright test --list",
+    "report": "playwright show-report"
   },
   "keywords": [],
   "author": "",

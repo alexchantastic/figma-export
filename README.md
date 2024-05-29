@@ -113,6 +113,7 @@ The following commands are available via `npm run`:
 | `start` | Starts downloads |
 | `retry` | Retries failed downloads from last run |
 | `dry-run` | Lists downloads |
+| `report` | Show an HTML report |
 
 ## Known issues
 
