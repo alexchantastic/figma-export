@@ -1,8 +1,7 @@
 {
   "name": "figma-export",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A CLI tool to bulk export Figma and FigJam files",
   "scripts": {
     "postinstall": "playwright install chromium",
     "get-team-files": "node ./scripts/get-team-files.js",
@@ -12,9 +11,8 @@
     "dry-run": "playwright test --list",
     "report": "playwright show-report"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Alex Chan",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.12.12"
   },
