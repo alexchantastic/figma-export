@@ -8,7 +8,8 @@
     "get-team-files": "node ./scripts/get-team-files.js",
     "get-project-files": "node ./scripts/get-project-files.js",
     "start": "playwright test",
-    "retry": "playwright test --last-failed"
+    "retry": "playwright test --last-failed",
+    "dry-run": "playwright test --list"
   },
   "keywords": [],
   "author": "",

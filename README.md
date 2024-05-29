@@ -9,12 +9,13 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 - [Requirements](#requirements)
 - [Installation](#Installation)
 - [Usage](#usage)
-- [Caveats](#caveats)
+- [Commands](#commands)
+- [Known issues](#known-issues)
 
 ## Requirements
 
-- node (v18.17.x)
-- npm (v9.6.x)
+- node (v18.x.x)
+- npm (v9.x.x)
 
 Other versions may work, but have not been officially tested.
 
@@ -101,7 +102,19 @@ If you encounter downloads that fail, you can attempt to re-run _only_ those fai
 
 Note that downloads may fail due to any number of reasons, but typically it is due to reaching the Playwright timeout. You can increase this timeout by updating the `timeout` configuration in `playwright.config.ts`.
 
-## Caveats
+## Commands
+
+The following commands are available via `npm run`:
+
+| Command | Description |
+| === | === |
+| `get-team-files` | Generates `files.json` from a Figma team ID |
+| `get-project-files` | Generates `files.json` from Figma project ID(s) |
+| `start` | Starts downloads |
+| `retry` | Retries failed downloads from last run |
+| `dry-run` | Lists downloads |
+
+## Known issues
 
 - SSO authentication is not supported (suggest using email and password)
 - Two-factor authentication is not supported (suggest temporarily disabling two-factor authentication)
