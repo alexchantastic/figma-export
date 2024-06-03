@@ -41,6 +41,17 @@ DOWNLOAD_PATH="/Users/anonymous/Downloads/" # Absolute path where files will be 
 WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 ```
 
+If you are using SSO to log in to Figma, you can either manually set a password (see [wiki](https://github.com/alexchantastic/figma-export/wiki/Manually-setting-a-Figma-password)) _or_ you can provide your Figma auth session cookie through `FIGMA_AUTH_COOKIE` in lieu of `FIGMA_EMAIL` and `FIGMA_PASSWORD`:
+
+```sh
+FIGMA_AUTH_COOKIE=my-auth-cookie-value
+FIGMA_ACCESS_TOKEN=figd_abcdefghijklmnopqrstuvwxyz
+DOWNLOAD_PATH="/Users/anonymous/Downloads/"
+WAIT_TIMEOUT=10000
+```
+
+The value for `FIGMA_AUTH_COOKIE` should be the value of the `__Host-figma.authn` cookie. Please refer to the [wiki](https://github.com/alexchantastic/figma-export/wiki/Getting-your-Figma-auth-session-cookie) on how to grab this value.
+
 ### Generating files.json
 
 `files.json` determines which Figma files within your account will be downloaded.
@@ -117,7 +128,6 @@ The following commands are available via `npm run`:
 
 ## Known issues
 
-- SSO authentication is not supported (suggest using email and password)
 - Two-factor authentication is not supported (suggest temporarily disabling two-factor authentication)
 - Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the `timeout` in `playwright.config.ts`)
 - Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
