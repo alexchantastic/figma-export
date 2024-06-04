@@ -34,9 +34,9 @@ You will also need a [Figma access token](https://www.figma.com/developers/api#a
 Create a `.env` file at the root of the repository:
 
 ```sh
-FIGMA_EMAIL=email@example.com
-FIGMA_PASSWORD=hunter2
-FIGMA_ACCESS_TOKEN=figd_abcdefghijklmnopqrstuvwxyz
+FIGMA_EMAIL="email@example.com"
+FIGMA_PASSWORD="hunter2"
+FIGMA_ACCESS_TOKEN="figd_abcdefghijklmnopqrstuvwxyz"
 DOWNLOAD_PATH="/Users/anonymous/Downloads/" # Absolute path where files will be downloaded to
 WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 ```
@@ -44,8 +44,8 @@ WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 If you are using SSO to log in to Figma, you can either manually set a password (see [wiki](https://github.com/alexchantastic/figma-export/wiki/Manually-setting-a-Figma-password)) _or_ you can provide your Figma auth session cookie through `FIGMA_AUTH_COOKIE` in lieu of `FIGMA_EMAIL` and `FIGMA_PASSWORD`:
 
 ```sh
-FIGMA_AUTH_COOKIE=my-auth-cookie-value
-FIGMA_ACCESS_TOKEN=figd_abcdefghijklmnopqrstuvwxyz
+FIGMA_AUTH_COOKIE="my-auth-cookie-value"
+FIGMA_ACCESS_TOKEN="figd_abcdefghijklmnopqrstuvwxyz"
 DOWNLOAD_PATH="/Users/anonymous/Downloads/"
 WAIT_TIMEOUT=10000
 ```
@@ -123,8 +123,10 @@ The following commands are available via `npm run`:
 | `get-project-files` | Generates `files.json` from Figma project ID(s) |
 | `start`             | Starts downloads                                |
 | `retry`             | Retries failed downloads from last run          |
-| `dry-run`           | Lists downloads                                 |
-| `report`            | Show an HTML report                             |
+| `dry-run`           | Lists files that will be downloaded             |
+| `report`            | Show an HTML report of the last run             |
+
+At any time, you can press `ctrl+c` to stop a command.
 
 ## Known issues
 
