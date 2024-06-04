@@ -1,4 +1,4 @@
-import { test as setup } from "@playwright/test";
+import { test as setup, expect } from "@playwright/test";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -34,9 +34,7 @@ setup("authenticate", async ({ page }) => {
     await page.getByRole("button", { name: "log in" }).click();
   }
 
-  await page.waitForURL(
-    "https://www.figma.com/files/recents-and-sharing/recently-viewed**",
-  );
+  await expect(page.getByTestId("ProfileButton")).toBeVisible();
 
   await page.context().storageState({ path: authFile });
 });
