@@ -19,5 +19,9 @@
   "dependencies": {
     "@playwright/test": "^1.44.0",
     "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=20.15.0",
+    "npm": ">=10.7.0"
   }
 }

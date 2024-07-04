@@ -14,8 +14,8 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 
 ## Requirements
 
-- node (v18.x.x)
-- npm (v9.x.x)
+- node (v20.15.x)
+- npm (v10.7.x)
 
 Other versions may work, but have not been officially tested.
 
