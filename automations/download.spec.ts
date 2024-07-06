@@ -9,7 +9,9 @@ const projects = JSON.parse(
 );
 
 for (const project of projects) {
-  test.describe(`project: ${project.name} (${project.id})`, () => {
+  const projectName = project.name || "Drafts";
+
+  test.describe(`project: ${projectName} (${project.id})`, () => {
     for (const file of project.files) {
       test(`file: ${file.name} (${file.key})`, async ({ page }) => {
         await page.goto(`https://www.figma.com/design/${file.key}/`);
@@ -25,7 +27,7 @@ for (const project of projects) {
         const filename = suggestedFilename.match(/.*(?=\.[\w\d]+)/)![0];
         const extension = suggestedFilename.replace(filename + ".", "");
         await download.saveAs(
-          `${process.env.DOWNLOAD_PATH!}${project.name} (${project.id})/${filename} (${file.key}).${extension}`,
+          `${process.env.DOWNLOAD_PATH!}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
         );
 
         await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 0);
