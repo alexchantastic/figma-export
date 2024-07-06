@@ -22,12 +22,10 @@ for (const project of projects) {
 
         const download = await downloadPromise;
         const suggestedFilename = download.suggestedFilename();
-        const filename =
-          suggestedFilename.slice(0, -4) +
-          ` (${file.key}).` +
-          suggestedFilename.slice(-3);
+        const filename = suggestedFilename.match(/.*(?=\.[\w\d]+)/)![0];
+        const extension = suggestedFilename.replace(filename + ".", "");
         await download.saveAs(
-          `${process.env.DOWNLOAD_PATH!}${project.name} (${project.id})/${filename}`,
+          `${process.env.DOWNLOAD_PATH!}${project.name} (${project.id})/${filename} (${file.key}).${extension}`,
         );
 
         await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 0);
