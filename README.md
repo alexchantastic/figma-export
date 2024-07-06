@@ -1,6 +1,6 @@
 # figma-export
 
-figma-export is a CLI tool for bulk exporting Figma and FigJam files to your local desktop in Figma's proprietary `.fig`/`.jam` format.
+figma-export is a CLI tool for bulk exporting Figma, FigJam, and Figma Slides files to your local desktop in Figma's proprietary `.fig`/`.jam`/`.deck` format.
 
 This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and [Playwright](https://playwright.dev/) to automate discovering Figma files and downloading them.
 
