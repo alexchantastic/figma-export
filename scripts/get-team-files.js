@@ -20,6 +20,7 @@ const teamIds = process.argv.slice(2);
         const projectFilesData = await projectFiles;
 
         projectFilesData.id = projectId;
+        projectFilesData.team_id = teamId;
 
         console.log(projectFilesData);
 

@@ -10,6 +10,7 @@ const projects = JSON.parse(
 
 for (const project of projects) {
   const projectName = project.name || "Drafts";
+  const teamId = project.team_id || null;
 
   test.describe(`project: ${projectName} (${project.id})`, () => {
     for (const file of project.files) {
@@ -27,7 +28,7 @@ for (const project of projects) {
         const filename = suggestedFilename.match(/.*(?=\.[\w\d]+)/)![0];
         const extension = suggestedFilename.replace(filename + ".", "");
         await download.saveAs(
-          `${process.env.DOWNLOAD_PATH!}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
+          `${process.env.DOWNLOAD_PATH!}/${teamId ? teamId + "/" : ""}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
         );
 
         await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 0);

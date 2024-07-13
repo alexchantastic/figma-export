@@ -37,7 +37,7 @@ Create a `.env` file at the root of the repository:
 FIGMA_EMAIL="email@example.com"
 FIGMA_PASSWORD="hunter2"
 FIGMA_ACCESS_TOKEN="figd_abcdefghijklmnopqrstuvwxyz"
-DOWNLOAD_PATH="/Users/anonymous/Downloads/" # Absolute path where files will be downloaded to
+DOWNLOAD_PATH="/Users/anonymous/Downloads" # Absolute path where files will be downloaded to
 WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
 ```
 
@@ -46,7 +46,7 @@ If you are using SSO to log in to Figma, you can either manually set a password 
 ```sh
 FIGMA_AUTH_COOKIE="my-auth-cookie-value"
 FIGMA_ACCESS_TOKEN="figd_abcdefghijklmnopqrstuvwxyz"
-DOWNLOAD_PATH="/Users/anonymous/Downloads/"
+DOWNLOAD_PATH="/Users/anonymous/Downloads"
 WAIT_TIMEOUT=10000
 ```
 
@@ -74,6 +74,7 @@ You are free to manually construct this file as long as it follows this structur
   {
     "name": String,
     "id": String,
+    "team_id": String?,
     "files": [
       {
         "key": String,
@@ -92,7 +93,29 @@ This is a modified structure from the return value of [Figma's GET project files
 
 Once you have generated `files.json`, you can then run `npm run start` to start the downloads. The status of each download will be shown in the console.
 
-Each file will be downloaded to your specified `DOWNLOAD_PATH` in a folder named with the project's name and ID. Each file will be saved as the file's name and ID (key).
+Each file will be downloaded to your specified `DOWNLOAD_PATH` in a folder named with the project's name and ID. Each file will be saved as the file's name and ID (key). The folder structure will look something like this:
+
+```
+Project A (12345)/
+├── File X (123).fig
+└── File Y (456).fig
+Project B (67890)/
+└── File Z (789).fig
+```
+
+If you ran `get-team-files`, your `files.json` will also have references to the team ID(s) so projects will be placed in a folder named after the team ID. In which case, the folder structure will look something like this:
+
+```
+1029384756/
+├── Project A (12345)/
+│   ├── File X (123).fig
+│   └── File Y (456).fig
+└── Project B (67890)/
+    └── File Z (789).fig
+5647382910/
+└── Project C (45678)/
+    └── File W (012).fig
+```
 
 ### Parallel downloads
 
@@ -131,5 +154,6 @@ At any time, you can press `ctrl+c` to stop a command.
 ## Known issues
 
 - Two-factor authentication is not supported (suggest temporarily disabling two-factor authentication)
+- You must have editor access to a file in order to download it
 - Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the `timeout` in `playwright.config.ts`)
 - Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
