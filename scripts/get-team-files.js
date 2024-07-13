@@ -1,31 +1,36 @@
 const fs = require("node:fs");
 const { getFiles, getProjects } = require("./lib");
 
+const teamIds = process.argv.slice(2);
+
 (async () => {
-  try {
-    const { projects } = await getProjects(process.argv[2]);
-    const files = [];
-    const promises = [];
+  const allFiles = [];
+  const promises = [];
 
-    for (const project of projects) {
-      const projectId = project.id;
-      const projectFiles = getFiles(project.id);
+  for (const teamId of teamIds) {
+    try {
+      const { projects } = await getProjects(teamId);
 
-      promises.push(projectFiles);
+      for (const project of projects) {
+        const projectId = project.id;
+        const projectFiles = getFiles(project.id);
 
-      const projectFilesData = await projectFiles;
+        promises.push(projectFiles);
 
-      projectFilesData.id = projectId;
+        const projectFilesData = await projectFiles;
 
-      console.log(projectFilesData);
+        projectFilesData.id = projectId;
 
-      files.push(projectFilesData);
+        console.log(projectFilesData);
+
+        allFiles.push(projectFilesData);
+      }
+    } catch (error) {
+      throw error;
     }
-
-    Promise.all(promises).then(() => {
-      fs.writeFileSync(__dirname + "/../files.json", JSON.stringify(files));
-    });
-  } catch (error) {
-    throw error;
   }
+
+  Promise.all(promises).then(() => {
+    fs.writeFileSync(__dirname + "/../files.json", JSON.stringify(allFiles));
+  });
 })();

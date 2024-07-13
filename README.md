@@ -58,8 +58,8 @@ The value for `FIGMA_AUTH_COOKIE` should be the value of the `__Host-figma.authn
 
 It is recommended that you use one of the built-in commands to generate `files.json`:
 
-- `npm run get-team-files {team_id}` - Gets all files for all projects within a given team ID
-  - Example: `npm run get-team-files 1234567890`
+- `npm run get-team-files {team_ids ...}` - Gets all files for all projects within given team IDs (space separated)
+  - Example: `npm run get-team-files 12345 67890`
 - `npm run get-project-files {project_ids ...}` - Gets all files for given project IDs (space separated)
   - Example: `npm run get-project-files 12345 67890`
 
@@ -119,7 +119,7 @@ The following commands are available via `npm run`:
 
 | Command             | Description                                     |
 | ------------------- | ----------------------------------------------- |
-| `get-team-files`    | Generates `files.json` from a Figma team ID     |
+| `get-team-files`    | Generates `files.json` from Figma team ID(s)    |
 | `get-project-files` | Generates `files.json` from Figma project ID(s) |
 | `start`             | Starts downloads                                |
 | `retry`             | Retries failed downloads from last run          |
