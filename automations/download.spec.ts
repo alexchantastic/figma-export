@@ -19,9 +19,9 @@ for (const project of projects) {
 
         const downloadPromise = page.waitForEvent("download");
 
-        await page.getByRole("button", { name: "Main menu" }).click();
-        await page.getByTestId("dropdown-option-File").click();
-        await page.getByTestId("dropdown-option-Save local copy…").click();
+        await page.locator("#toggle-menu-button").click();
+        await page.locator("[id^='mainMenu-file-menu-']").click();
+        await page.locator("[id^='mainMenu-save-as-']").click();
 
         const download = await downloadPromise;
         const suggestedFilename = download.suggestedFilename();
