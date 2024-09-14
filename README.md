@@ -1,6 +1,6 @@
 # figma-export
 
-figma-export is a CLI tool for bulk exporting Figma, FigJam, and Figma Slides files to your local desktop in Figma's proprietary `.fig`/`.jam`/`.deck` format.
+figma-export is a CLI tool for bulk exporting Figma, FigJam, and Figma Slides files to your local desktop in Figma's proprietary `.fig`/`.jam`/`.deck` format. figma-export supports downloading by team, project, and even drafts.
 
 This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and [Playwright](https://playwright.dev/) to automate discovering Figma files and downloading them.
 
@@ -55,6 +55,9 @@ The value for `FIGMA_AUTH_COOKIE` should be the value of the `__Host-figma.authn
 ### Generating files.json
 
 `files.json` determines which Figma files within your account will be downloaded.
+
+[!TIP]
+Drafts are just a hidden project in Figma so you can absolutely download them with figma-export. Check out the [wiki](https://github.com/alexchantastic/figma-export/wiki/Downloading-draft-files) to learn about how to grab the drafts project ID.
 
 It is recommended that you use one of the built-in commands to generate `files.json`:
 
