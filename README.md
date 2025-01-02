@@ -4,6 +4,9 @@ figma-export is a CLI tool for bulk exporting Figma, FigJam, and Figma Slides fi
 
 This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and [Playwright](https://playwright.dev/) to automate discovering Figma files and downloading them.
 
+> [!INFO]
+> If you are a complete beginner to the terminal and CLI tools, please refer to the [Complete beginner guide](https://github.com/alexchantastic/figma-export/wiki/Complete-beginner-guide) in the wiki.
+
 ## Table of contents
 
 - [Requirements](#requirements)
