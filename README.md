@@ -4,7 +4,7 @@ figma-export is a CLI tool for bulk exporting Figma, FigJam, and Figma Slides fi
 
 This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and [Playwright](https://playwright.dev/) to automate discovering Figma files and downloading them.
 
-> [!INFO]
+> [!NOTE]
 > If you are a complete beginner to the terminal and CLI tools, please refer to the [Complete beginner guide](https://github.com/alexchantastic/figma-export/wiki/Complete-beginner-guide) in the wiki.
 
 ## Table of contents
@@ -17,12 +17,12 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 
 ## Requirements
 
-- node (v20.15.x)
-- npm (v10.7.x)
+- node (v20 LTS)
+- npm (v10 LTS)
 
 Other versions may work, but have not been officially tested.
 
-You will also need a [Figma access token](https://www.figma.com/developers/api#authentication) that you can generate through your Figma user profile settings.
+You will also need a [Figma access token](https://www.figma.com/developers/api#authentication) with scope access to **file content** that you can generate through your Figma user profile settings.
 
 ## Installation
 
@@ -138,6 +138,9 @@ export default defineConfig({
   ...
 });
 ```
+
+> [!CAUTION]
+> It is not advised to use parallel downloads as Figma has started to invoke anti-automation safe guards.
 
 ### Retrying failed downloads
 
