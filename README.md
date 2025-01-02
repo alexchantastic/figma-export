@@ -38,8 +38,11 @@ FIGMA_EMAIL="email@example.com"
 FIGMA_PASSWORD="hunter2"
 FIGMA_ACCESS_TOKEN="figd_abcdefghijklmnopqrstuvwxyz"
 DOWNLOAD_PATH="/Users/anonymous/Downloads" # Absolute path where files will be downloaded to
-WAIT_TIMEOUT=10000 # Time in ms to wait between downloads
+WAIT_TIMEOUT=10000 # Time in ms to wait between downloads (defaults to 10000)
 ```
+
+> [!CAUTION]
+> Figma has started to implement anti-automation detection which may cause issues with using this tool. It is recommended that you do not set a lower `WAIT_TIMEOUT` than `10000`. To be on the safer side, you may want to increase it even further.
 
 If you are using SSO to log in to Figma, you can either manually set a password (see [wiki](https://github.com/alexchantastic/figma-export/wiki/Manually-setting-a-Figma-password)) _or_ you can provide your Figma auth session cookie through `FIGMA_AUTH_COOKIE` in lieu of `FIGMA_EMAIL` and `FIGMA_PASSWORD`:
 
@@ -159,4 +162,4 @@ At any time, you can press `ctrl+c` to stop a command.
 - Two-factor authentication is not supported (suggest temporarily disabling two-factor authentication)
 - You must have editor access to a file in order to download it
 - Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the `timeout` in `playwright.config.ts`)
-- Rate limiting may occur as it is not clear if Figma will throttle based off of how many files you download (suggest using `WAIT_TIMEOUT`)
+- Figma will invoke anti-automation measures based off of how many files you download (suggest using a `WAIT_TIMEOUT` of at least `10000`)

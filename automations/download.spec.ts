@@ -31,7 +31,7 @@ for (const project of projects) {
           `${process.env.DOWNLOAD_PATH!}/${teamId ? teamId + "/" : ""}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
         );
 
-        await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 0);
+        await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 10000);
       });
     }
   });
