@@ -46,6 +46,7 @@ WAIT_TIMEOUT=10000 # Time in ms to wait between downloads (defaults to 10000)
 
 > [!CAUTION]
 > Figma has started to implement anti-automation detection which may cause issues with using this tool. It is recommended that you do not set a lower `WAIT_TIMEOUT` than `10000`. To be on the safer side, you may want to increase it even further.
+> Ensure the folder in `DOWNLOAD_PATH` exists to avoid getting an error when the download is run.
 
 If you are using SSO to log in to Figma, you can either manually set a password (see [wiki](https://github.com/alexchantastic/figma-export/wiki/Manually-setting-a-Figma-password)) _or_ you can provide your Figma auth session cookie through `FIGMA_AUTH_COOKIE` in lieu of `FIGMA_EMAIL` and `FIGMA_PASSWORD`:
 
