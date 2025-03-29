@@ -6,8 +6,11 @@
     "postinstall": "playwright install chromium",
     "get-team-files": "node ./scripts/get-team-files.js",
     "get-project-files": "node ./scripts/get-project-files.js",
+    "filter": "node ./scripts/recent-changes.js",
     "start": "playwright test",
+    "recent": "playwright test ./automations/auth.setup.ts ./automations/download-recent.spec.ts",
     "retry": "playwright test --last-failed",
+    "retry-recent": "playwright test --last-failed ./automations/auth.setup.ts ./automations/download-recent.spec.ts",
     "dry-run": "playwright test --list",
     "report": "playwright show-report"
   },
