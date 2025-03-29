@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require("node:fs");
 const { getFiles, getProjects } = require("./lib");
 
