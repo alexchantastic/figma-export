@@ -27,9 +27,14 @@ setup("authenticate", async ({ page }) => {
     await page
       .getByRole("textbox", { name: "email" })
       .fill(process.env.FIGMA_EMAIL!);
-    await page
-      .getByRole("textbox", { name: "password" })
-      .fill(process.env.FIGMA_PASSWORD!);
+
+    const passwordInput = page.getByRole("textbox", { name: "password" });
+
+    if (!(await passwordInput.isVisible())) {
+      await page.getByRole("button", { name: "continue with email" }).click();
+    }
+
+    await passwordInput.fill(process.env.FIGMA_PASSWORD!);
 
     await page.getByRole("button", { name: "log in" }).click();
   }
