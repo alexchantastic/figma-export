@@ -172,4 +172,4 @@ At any time, you can press `ctrl+c` to stop a command.
 - You must have editor access to a file in order to download it
 - Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the `timeout` in `playwright.config.ts`)
 - Figma will invoke anti-automation measures based off of how many files you download (suggest using a `WAIT_TIMEOUT` of at least `10000`)
-- If you have the setting for opening links in the Figma desktop app enabled, downloads will not start (suggest [disabling the setting](https://help.figma.com/hc/articles/360039824334-Open-links-in-the-desktop-app#h_01HW8HDP9DN3HTMQ65XQMXR88A)
+- If you have the setting for opening links in the Figma desktop app enabled, downloads will not start (suggest [disabling the setting](https://help.figma.com/hc/articles/360039824334-Open-links-in-the-desktop-app#h_01HW8HDP9DN3HTMQ65XQMXR88A))
