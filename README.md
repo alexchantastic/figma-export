@@ -24,6 +24,9 @@ Other versions may work, but have not been officially tested.
 
 You will also need a [Figma access token](https://www.figma.com/developers/api#authentication) with scope access to **file content** that you can generate through your Figma user profile settings.
 
+> [!NOTE]
+> You must disable opening links in the Figma desktop app in order for downloads to work. See the [Figma docs](https://help.figma.com/hc/articles/360039824334-Open-links-in-the-desktop-app#h_01HW8HDP9DN3HTMQ65XQMXR88A) on how to disable this setting.
+
 ## Installation
 
 1. Clone the repository or download the latest release
@@ -169,3 +172,4 @@ At any time, you can press `ctrl+c` to stop a command.
 - You must have editor access to a file in order to download it
 - Some downloads may take a long time (large file size, slow internet connection, etc.) which can trigger the Playwright timeout and lead to a failed download (suggest increasing the `timeout` in `playwright.config.ts`)
 - Figma will invoke anti-automation measures based off of how many files you download (suggest using a `WAIT_TIMEOUT` of at least `10000`)
+- If you have the setting for opening links in the Figma desktop app enabled, downloads will not start (suggest [disabling the setting](https://help.figma.com/hc/articles/360039824334-Open-links-in-the-desktop-app#h_01HW8HDP9DN3HTMQ65XQMXR88A)
