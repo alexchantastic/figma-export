@@ -7,6 +7,7 @@ const authFile = ".auth/user.json";
 
 setup("authenticate", async ({ page }) => {
   const FIGMA_AUTH_COOKIE = process.env.FIGMA_AUTH_COOKIE;
+  const loginFinishedTimeout = (process.env.FIGMA_LOGIN_FINISHED_TIMEOUT|0) || 10;
 
   if (FIGMA_AUTH_COOKIE) {
     const authCookie = {
@@ -40,7 +41,7 @@ setup("authenticate", async ({ page }) => {
   }
 
   await expect(page.getByTestId("ProfileButton")).toBeAttached({
-    timeout: 10 * 1000,
+    timeout: loginFinishedTimeout * 1000,
   });
 
   await page.context().storageState({ path: authFile });
