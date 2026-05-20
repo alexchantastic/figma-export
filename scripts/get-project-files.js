@@ -1,15 +1,17 @@
 /* eslint-disable */
 const fs = require("node:fs");
-const { getFiles } = require("./lib");
+const { getFiles, parseArgs, filterFiles } = require("./lib");
 
-const projectIds = process.argv.slice(2);
+const { ids: projectIds, filters } = parseArgs(process.argv.slice(2));
 
 (async () => {
   const allFiles = [];
 
   for (const projectId of projectIds) {
     try {
-      const files = await getFiles(projectId);
+      let files = await getFiles(projectId);
+
+      files = filterFiles(files, filters);
 
       files.id = projectId;
 

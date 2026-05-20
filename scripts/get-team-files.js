@@ -1,8 +1,8 @@
 /* eslint-disable */
 const fs = require("node:fs");
-const { getFiles, getProjects } = require("./lib");
+const { getFiles, getProjects, parseArgs, filterFiles } = require("./lib");
 
-const teamIds = process.argv.slice(2);
+const { ids: teamIds, filters } = parseArgs(process.argv.slice(2));
 
 (async () => {
   const allFiles = [];
@@ -14,7 +14,9 @@ const teamIds = process.argv.slice(2);
 
       for (const project of projects) {
         const projectId = project.id;
-        const projectFiles = getFiles(project.id);
+        const projectFiles = getFiles(project.id).then((data) =>
+          filterFiles(data, filters),
+        );
 
         promises.push(projectFiles);
 

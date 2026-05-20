@@ -48,5 +48,60 @@ async function getFiles(projectId) {
   }
 }
 
+function parseArgs(argv) {
+  const ids = [];
+  const filters = {};
+
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i];
+    if (arg === "-last-modified-before") {
+      const value = argv[++i];
+      if (!value || isNaN(Date.parse(value))) {
+        throw new Error(
+          `Invalid or missing value for -last-modified-before: ${value}`,
+        );
+      }
+      filters.before = new Date(value);
+    } else if (arg === "-last-modified-after") {
+      const value = argv[++i];
+      if (!value || isNaN(Date.parse(value))) {
+        throw new Error(
+          `Invalid or missing value for -last-modified-after: ${value}`,
+        );
+      }
+      filters.after = new Date(value);
+    } else if (!arg.startsWith("-")) {
+      ids.push(arg);
+    }
+  }
+
+  return { ids, filters };
+}
+
+function filterFiles(filesData, filters) {
+  if (!filters.before && !filters.after) {
+    return filesData;
+  }
+
+  if (!filesData.files || !Array.isArray(filesData.files)) {
+    return filesData;
+  }
+
+  filesData.files = filesData.files.filter((file) => {
+    const lastModified = new Date(file.last_modified);
+    if (filters.before && lastModified >= filters.before) {
+      return false;
+    }
+    if (filters.after && lastModified <= filters.after) {
+      return false;
+    }
+    return true;
+  });
+
+  return filesData;
+}
+
 exports.getProjects = getProjects;
 exports.getFiles = getFiles;
+exports.parseArgs = parseArgs;
+exports.filterFiles = filterFiles;
