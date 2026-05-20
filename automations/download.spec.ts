@@ -19,9 +19,9 @@ for (const project of projects) {
 
         const downloadPromise = page.waitForEvent("download");
 
-        await page.locator("#toggle-menu-button").click();
-        await page.locator("[id^='mainMenu-file-menu-']").click();
-        await page.locator("[id^='mainMenu-save-as-']").click();
+        await page.locator("[data-tooltip='main-menu']").click();
+        await page.locator("[aria-controls^='mainMenu.file-menu']").click();
+        await page.getByText("Save local copy…", { exact: true }).click();
 
         const download = await downloadPromise;
         const suggestedFilename = download.suggestedFilename();
