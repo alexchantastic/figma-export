@@ -4,16 +4,39 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const projects = JSON.parse(
+const allProjects = JSON.parse(
   fs.readFileSync("files.json", { encoding: "utf-8" }),
-).filter((project: any) => project.files.some((file: any) => !file.downloaded));
+);
 
-for (const project of projects) {
+let limit = Infinity;
+const limitIdx = process.argv.indexOf("--limit");
+if (limitIdx !== -1 && process.argv[limitIdx + 1]) {
+  limit = parseInt(process.argv[limitIdx + 1], 10);
+}
+
+const projectsToDownload = [];
+let scheduledCount = 0;
+
+for (const project of allProjects) {
+  const pendingFiles = project.files.filter((file: any) => !file.downloaded);
+  if (pendingFiles.length === 0 || scheduledCount >= limit) {
+    continue;
+  }
+
+  const filesForThisProject = pendingFiles.slice(0, limit - scheduledCount);
+  projectsToDownload.push({
+    ...project,
+    files: filesForThisProject,
+  });
+  scheduledCount += filesForThisProject.length;
+}
+
+for (const project of projectsToDownload) {
   const projectName = project.name || "Drafts";
   const teamId = project.team_id || null;
 
   test.describe(`project: ${projectName} (${project.id})`, () => {
-    for (const file of project.files.filter((file: any) => !file.downloaded)) {
+    for (const file of project.files) {
       test(`file: ${file.name} (${file.key})`, async ({ page }) => {
         await page.goto(`https://www.figma.com/design/${file.key}/`);
 
@@ -34,8 +57,16 @@ for (const project of projects) {
           `${process.env.DOWNLOAD_PATH!}/${teamId ? teamId + "/" : ""}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
         );
 
-        file.downloaded = true;
-        fs.writeFileSync("files.json", JSON.stringify(projects, null, 2));
+        // Update the original object reference
+        const originalProject = allProjects.find(
+          (p: any) => p.id === project.id,
+        );
+        const originalFile = originalProject.files.find(
+          (f: any) => f.key === file.key,
+        );
+        originalFile.downloaded = true;
+
+        fs.writeFileSync("files.json", JSON.stringify(allProjects, null, 2));
 
         await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 10000);
       });
