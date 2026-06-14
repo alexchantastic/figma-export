@@ -10,7 +10,7 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 ## Table of contents
 
 - [Requirements](#requirements)
-- [Installation](#Installation)
+- [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
 - [Known issues](#known-issues)
@@ -90,7 +90,8 @@ You are free to manually construct this file as long as it follows this structur
     "files": [
       {
         "key": String,
-        "name": String
+        "name": String,
+        "downloaded": Boolean?
       },
       ...
     ]
@@ -100,6 +101,26 @@ You are free to manually construct this file as long as it follows this structur
 ```
 
 This is a modified structure from the return value of [Figma's GET project files](https://www.figma.com/developers/api#get-project-files-endpoint) endpoint.
+
+#### Filtering files by date
+
+You can filter files by their last modified date using the `-last-modified-before` and `-last-modified-after` flags.
+
+- `-last-modified-before <date>`: Only download files that were last modified before the specified date.
+- `-last-modified-after <date>`: Only download files that were last modified after the specified date.
+
+Any date format supported by JavaScript's `Date.parse()` is accepted (such as `YYYY-MM-DD` or ISO 8601 strings).
+
+**Examples:**
+
+- Only get files modified after `2026-06-01`:
+  ```sh
+  npm run get-team-files -- 12345 67890 -last-modified-after 2026-06-01
+  ```
+- Get files modified between `2026-05-01` and `2026-06-01`:
+  ```sh
+  npm run get-project-files -- 12345 -last-modified-after 2026-05-01 -last-modified-before 2026-06-01
+  ```
 
 ### Starting the downloads
 
@@ -129,6 +150,28 @@ If you ran `get-team-files`, your `files.json` will also have references to the 
     └── File W (012).fig
 ```
 
+### Download tracking
+
+Each successful file download will be tracked in `files.json` by adding a `"downloaded": true` property to the corresponding file object.
+
+If a run is stopped or fails midway, running `npm run start` again will automatically resume downloading only the remaining pending files.
+
+To bypass tracking and force-download all files from scratch (including those already downloaded), run:
+
+```sh
+npm run start:force
+```
+
+### Limiting downloads
+
+You can limit the number of files downloaded in a single run using the `--limit` flag:
+
+```sh
+npm run start -- --limit 10
+```
+
+This will download only the first 10 pending (not yet downloaded) files and then stop. This is useful for testing your setup or working around Figma's anti-automation measures by downloading in smaller batches.
+
 ### Parallel downloads
 
 Parallel downloads are disabled by default. To enable them, update the following properties in `playwright.config.ts`:
@@ -155,14 +198,15 @@ Note that downloads may fail due to any number of reasons, but typically it is d
 
 The following commands are available via `npm run`:
 
-| Command             | Description                                     |
-| ------------------- | ----------------------------------------------- |
-| `get-team-files`    | Generates `files.json` from Figma team ID(s)    |
-| `get-project-files` | Generates `files.json` from Figma project ID(s) |
-| `start`             | Starts downloads                                |
-| `retry`             | Retries failed downloads from last run          |
-| `dry-run`           | Lists files that will be downloaded             |
-| `report`            | Show an HTML report of the last run             |
+| Command             | Description                                                |
+| ------------------- | ---------------------------------------------------------- |
+| `get-team-files`    | Generates `files.json` from Figma team ID(s)               |
+| `get-project-files` | Generates `files.json` from Figma project ID(s)            |
+| `start`             | Starts downloads                                           |
+| `start:force`       | Starts downloads, forcing all files to be downloaded again |
+| `retry`             | Retries failed downloads from last run                     |
+| `dry-run`           | Lists files that will be downloaded                        |
+| `report`            | Show an HTML report of the last run                        |
 
 At any time, you can press `ctrl+c` to stop a command.
 
