@@ -164,10 +164,10 @@ npm run start:force
 
 ### Limiting downloads
 
-You can limit the number of files downloaded in a single run using the `--limit` flag:
+You can limit the number of files downloaded in a single run using the `-limit` flag:
 
 ```sh
-npm run start -- --limit 10
+npm run start -- -limit 10
 ```
 
 This will download only the first 10 pending (not yet downloaded) files and then stop. This is useful for testing your setup or working around Figma's anti-automation measures by downloading in smaller batches.
