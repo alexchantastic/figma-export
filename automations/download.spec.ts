@@ -14,11 +14,13 @@ if (limitIdx !== -1 && process.argv[limitIdx + 1]) {
   limit = parseInt(process.argv[limitIdx + 1], 10);
 }
 
+const isForce = process.env.FORCE === "true";
+
 const projectsToDownload = [];
 let scheduledCount = 0;
 
 for (const project of allProjects) {
-  const pendingFiles = project.files.filter((file: any) => !file.downloaded);
+  const pendingFiles = project.files.filter((file: any) => isForce || !file.downloaded);
   if (pendingFiles.length === 0 || scheduledCount >= limit) {
     continue;
   }

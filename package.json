@@ -6,7 +6,8 @@
     "postinstall": "playwright install chromium",
     "get-team-files": "node ./scripts/get-team-files.js",
     "get-project-files": "node ./scripts/get-project-files.js",
-    "start": "playwright test",
+    "start": "playwright test automations/download.spec.ts --",
+    "start:force": "playwright test automations/download.spec.ts -- -force",
     "retry": "playwright test --last-failed",
     "dry-run": "playwright test --list",
     "report": "playwright show-report"
