@@ -17,6 +17,9 @@ for (const project of projects) {
       test(`file: ${file.name} (${file.key})`, async ({ page }) => {
         await page.goto(`https://www.figma.com/design/${file.key}/`);
 
+        // Dismiss "Need to use the desktop app or installed fonts?" dialog if it appears
+        await page.getByRole("button", { name: "Close" }).click({ timeout: 5000 }).catch(() => {});
+
         const downloadPromise = page.waitForEvent("download");
 
         await page.locator("[data-tooltip='main-menu']").click();

@@ -20,7 +20,16 @@ export default defineConfig({
     },
     {
       name: "download",
-      use: { ...devices["Desktop Chrome"], storageState: ".auth/user.json" },
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: ".auth/user.json",
+        launchOptions: {
+          args: [
+            "--disable-features=DownloadRestrictions,ExternalProtocolDialog,PrivateNetworkAccessPermissionPrompt",
+            "--disable-features=PrivateNetworkAccessSendPreflights",
+          ],
+        },
+      },
       dependencies: ["setup"],
     },
   ],
