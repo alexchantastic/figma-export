@@ -13,7 +13,7 @@ if (fs.existsSync("files.json")) {
     );
 
     let limit = Infinity;
-    const limitIdx = process.argv.indexOf("--limit");
+    const limitIdx = process.argv.indexOf("-limit");
     if (limitIdx !== -1 && process.argv[limitIdx + 1]) {
       limit = parseInt(process.argv[limitIdx + 1], 10);
     }
