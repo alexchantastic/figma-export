@@ -1,32 +1,76 @@
 {
-  "name": "figma-export",
-  "version": "3.0.0",
-  "description": "A CLI tool to bulk export Figma and FigJam files",
-  "scripts": {
-    "postinstall": "playwright install chromium",
-    "get-team-files": "node ./scripts/get-team-files.js",
-    "get-folder-files": "node ./scripts/get-folder-files.js",
-    "start": "playwright test automations/download.spec.ts --",
-    "start:force": "playwright test automations/download.spec.ts -- -force",
-    "retry": "playwright test --last-failed",
-    "dry-run": "playwright test --list",
-    "report": "playwright show-report"
+  "name": "figma-files-sync",
+  "version": "1.1.0",
+  "description": "Keep native Figma files synchronized locally with their source documents.",
+  "type": "module",
+  "bin": {
+    "figma-files-sync": "dist/cli.js"
   },
-  "author": "Alex Chan",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./manifest.schema.json": "./schemas/manifest.schema.json"
+  },
+  "files": [
+    "dist",
+    "schemas",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/build-schema.mjs",
+    "format": "prettier --write src tests scripts README.md package.json tsconfig.json eslint.config.mjs",
+    "format:check": "prettier --check src tests scripts README.md package.json tsconfig.json eslint.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests scripts",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "prepare": "npm run build",
+    "prepack": "npm run build",
+    "test:package": "node scripts/test-package.mjs",
+    "prepublishOnly": "npm run check && npm run format:check && npm run test:package"
+  },
+  "author": "Victor Wads",
   "license": "MIT",
-  "devDependencies": {
-    "@eslint/js": "^9.23.0",
-    "@types/node": "^20.12.12",
-    "eslint": "^9.23.0",
-    "globals": "^16.0.0",
-    "typescript-eslint": "^8.28.0"
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorwads/figma-files-sync.git"
+  },
+  "homepage": "https://github.com/victorwads/figma-files-sync#readme",
+  "bugs": {
+    "url": "https://github.com/victorwads/figma-files-sync/issues"
+  },
+  "keywords": [
+    "figma",
+    "sync",
+    "backup",
+    "cli",
+    "fig"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
   },
   "dependencies": {
-    "@playwright/test": "^1.60.0",
-    "dotenv": "^16.4.5"
+    "commander": "^14.0.0",
+    "playwright": "^1.60.0",
+    "zod": "^4.0.0"
   },
-  "engines": {
-    "node": ">=20.18.1",
-    "npm": ">=10.8.2"
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.0"
   }
 }
