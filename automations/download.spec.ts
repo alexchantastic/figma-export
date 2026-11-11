@@ -1,6 +1,7 @@
 import { test } from "@playwright/test";
 import fs from "node:fs";
 import dotenv from "dotenv";
+import { watchForVerification } from "./verification-alert";
 
 dotenv.config();
 
@@ -53,39 +54,48 @@ for (const project of projectsToDownload) {
   test.describe(`project: ${projectName} (${project.id})`, () => {
     for (const file of project.files) {
       test(`file: ${file.name} (${file.key})`, async ({ page }) => {
-        await page.goto(`https://www.figma.com/design/${file.key}/`);
+        const stopVerificationAlert =
+          process.env.FIGMA_VERIFICATION_ALERT === "true"
+            ? watchForVerification(page)
+            : undefined;
 
-        // Dismiss "Need to use the desktop app or installed fonts?" dialog if it appears
-        await page.getByRole("button", { name: "Close" }).click({ timeout: 5000 }).catch(() => {});
+        try {
+          await page.goto(`https://www.figma.com/design/${file.key}/`);
 
-        const downloadPromise = page.waitForEvent("download");
+          // Dismiss "Need to use the desktop app or installed fonts?" dialog if it appears
+          await page.getByRole("button", { name: "Close" }).click({ timeout: 5000 }).catch(() => {});
 
-        await page.locator("[data-tooltip='main-menu']").click();
-        await page.locator("[aria-controls^='mainMenu.file-menu']").click();
-        await page.getByText("Save local copy…", { exact: true }).click();
+          const downloadPromise = page.waitForEvent("download");
 
-        const download = await downloadPromise;
-        const suggestedFilename = download.suggestedFilename();
-        const filename = suggestedFilename.match(/.*(?=\.[\w\d]+)/)![0];
-        const extension = suggestedFilename.replace(filename + ".", "");
-        await download.saveAs(
-          `${process.env.DOWNLOAD_PATH!}/${teamId ? teamId + "/" : ""}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
-        );
+          await page.locator("[data-tooltip='main-menu']").click();
+          await page.locator("[aria-controls^='mainMenu.file-menu']").click();
+          await page.getByText("Save local copy…", { exact: true }).click();
 
-        // Update the original object reference
-        const originalProject = (allProjects as FigmaFolder[]).find(
-          (p: FigmaFolder) => p.id === project.id,
-        );
-        const originalFile = originalProject?.files.find(
-          (f: FigmaFile) => f.key === file.key,
-        );
-        if (originalFile) {
-          originalFile.downloaded = true;
+          const download = await downloadPromise;
+          const suggestedFilename = download.suggestedFilename();
+          const filename = suggestedFilename.match(/.*(?=\.[\w\d]+)/)![0];
+          const extension = suggestedFilename.replace(filename + ".", "");
+          await download.saveAs(
+            `${process.env.DOWNLOAD_PATH!}/${teamId ? teamId + "/" : ""}${projectName} (${project.id})/${filename} (${file.key}).${extension}`,
+          );
+
+          // Update the original object reference
+          const originalProject = (allProjects as FigmaFolder[]).find(
+            (p: FigmaFolder) => p.id === project.id,
+          );
+          const originalFile = originalProject?.files.find(
+            (f: FigmaFile) => f.key === file.key,
+          );
+          if (originalFile) {
+            originalFile.downloaded = true;
+          }
+
+          fs.writeFileSync("files.json", JSON.stringify(allProjects, null, 2));
+
+          await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 10000);
+        } finally {
+          stopVerificationAlert?.();
         }
-
-        fs.writeFileSync("files.json", JSON.stringify(allProjects, null, 2));
-
-        await page.waitForTimeout(Number(process.env.WAIT_TIMEOUT) || 10000);
       });
     }
   });
