@@ -9,11 +9,45 @@ This tool leverages [Figma's REST API](https://www.figma.com/developers/api) and
 
 ## Table of contents
 
+- [Fork changes](#fork-changes)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
 - [Known issues](#known-issues)
+
+## Fork changes
+
+### Windows notification for manual verification
+
+This fork can show a Windows notification and print a terminal message when Figma asks for manual verification during an export. The alert does not solve, skip, or disable the challenge.
+
+Playwright watches for the verification message in the Figma page. When it appears, Node.js launches a PowerShell helper that asks Windows to show a notification. The watcher currently matches the English prompt, so different wording or a different language can prevent detection.
+
+**Coming from upstream?** Run `npm ci` in the fork, then copy your local `.env` and `files.json` into it. The copied manifest keeps its download progress. Review `DOWNLOAD_PATH` before running. For a fresh setup, follow [Installation](#installation) and [Usage](#usage).
+
+To enable the alert for every run from this checkout, add this line to your local `.env`:
+
+```dotenv
+FIGMA_VERIFICATION_ALERT=true
+```
+
+Then run Playwright with Chromium visible:
+
+```bash
+npx playwright test automations/download.spec.ts --headed --timeout=1200000
+```
+
+To enable the alert for a single run without editing `.env`, prefix the command with the variable in Git Bash:
+
+```bash
+FIGMA_VERIFICATION_ALERT=true npx playwright test automations/download.spec.ts --headed --timeout=1200000
+```
+
+The `--headed` flag opens a visible Chromium window. Once it opens, you can minimize it and keep working. Clicking the notification does not open Chromium. When the alert appears, switch back to the existing Chromium window yourself, click **Verify** in Figma, and complete the challenge. The test timer keeps running. The commands above allow up to 20 minutes per file test and continue after individual failures.
+
+> [!NOTE]
+> If the Windows popup does not appear, go to **Settings → System → Notifications**. Turn on **Notifications**, allow banners for the sender if listed, and turn off **Do not disturb**. Check whether Focus or an automatic rule turns Do not disturb back on. The terminal still prints a message when the verification prompt is detected. See [Microsoft’s notification settings guide](https://support.microsoft.com/en-us/windows/experience/notifications-and-do-not-disturb-in-windows).
 
 ## Requirements
 
@@ -124,7 +158,7 @@ Any date format supported by JavaScript's `Date.parse()` is accepted (such as `Y
 
 ### Starting the downloads
 
-Once you have generated `files.json`, you can then run `npm run start` to start the downloads. The status of each download will be shown in the console.
+Once you have generated `files.json`, you can then run `npm run start` to start the downloads. The status of each download will be shown in the console. To run with a visible browser and Windows verification alerts, follow the [fork instructions](#windows-notification-for-manual-verification).
 
 Each file will be downloaded to your specified `DOWNLOAD_PATH` in a folder named with the folder's name and ID. Each file will be saved as the file's name and ID (key). The folder structure will look something like this:
 
@@ -170,7 +204,7 @@ You can limit the number of files downloaded in a single run using the `-limit` 
 npm run start -- -limit 10
 ```
 
-This will download only the first 10 pending (not yet downloaded) files and then stop. This is useful for testing your setup or working around Figma's anti-automation measures by downloading in smaller batches.
+This will download only the first 10 pending (not yet downloaded) files and then stop. Use this to test your setup or process a smaller batch.
 
 ### Parallel downloads
 
